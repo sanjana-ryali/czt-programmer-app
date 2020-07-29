@@ -5,15 +5,15 @@ from frames.graphs_frame import GraphsFrame
 
 
 class ScrollableGraphsWindow(tk.Canvas):
-    def __init__(self, container, *args, **kwargs):
+    def __init__(self, container, scroll_position, *args, **kwargs):
         super().__init__(container, *args, **kwargs, highlightthickness=0)
 
         self.g_scr_frame = ttk.Frame(container)
         self.g_scr_frame.columnconfigure(0, weight=1)
 
         # scrollable_window grows when you add components to it
-        self.scrollable_window = self.create_window((0, 0), window=self.g_scr_frame, anchor="nw")
-        self.config(borderwidth="5", relief="ridge", width="400", height="650")
+        self.scrollable_window = self.create_window((0, 0), window=self.g_scr_frame, anchor=scroll_position)
+        self.config(width="400", height="650")
 
         def configure_scroll_region(event):
             self.configure(scrollregion=self.bbox("all"))
@@ -36,18 +36,25 @@ class ScrollableGraphsWindow(tk.Canvas):
     def _on_mousewheel(self, event):
         self.yview_scroll(-int(event.delta / 120), "units")
 
+    def test_scrolling(self):
+        for x in range(1000):
+            print("Hello")
+            hello_lbl = ttk.Label(self.g_scr_frame, text="Hello")
+            hello_lbl.pack()
+
     def update_graphs(self):
         # TO-DO add a check to see if graphs exists
-        container = ttk.Frame(self.g_scr_frame)
-        container.columnconfigure(0, weight=1)
-        container.grid(column=0, row=0, sticky="NSEW")
+        # container = ttk.Frame(self.g_scr_frame)
+        # container.columnconfigure(0, weight=1)
+        # container.grid(column=0, row=0, sticky="NSEW")
 
-        graphs_frame_1 = GraphsFrame(container)
-        graphs_frame_1.grid(column=0, row=0, sticky="NSEW")
+        graphs_frame_1 = GraphsFrame(self.g_scr_frame)
+        graphs_frame_1.grid(column=0, row=0, sticky="NW")
+        #self.test_scrolling()
 
-        graphs_frame_3 = GraphsFrame(container)
-        graphs_frame_3.grid(column=0, row=1, sticky="NSEW")
-
-        graphs_frame_5 = GraphsFrame(container)
-        graphs_frame_5.grid(column=0, row=2, sticky="NSEW")
+        # graphs_frame_3 = GraphsFrame(container)
+        # graphs_frame_3.grid(column=0, row=1, sticky="NSEW")
+        #
+        # graphs_frame_5 = GraphsFrame(container)
+        # graphs_frame_5.grid(column=0, row=2, sticky="NSEW")
 
