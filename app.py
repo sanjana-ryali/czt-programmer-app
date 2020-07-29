@@ -6,8 +6,10 @@ class CZTProgrammerAppWindow(tk.Tk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.geometry("1000x800")
-        #self.minsize(500, 400)
+        self.geometry("1010x800")
+        self.minsize(width=1010, height=800)
+        self.maxsize(width=1010, height=800)
+        self.title("RENA Programmer For CZT PET")
 
         container = ttk.Frame(self)
         container.grid(column=0, row=0, sticky="NSEW")
